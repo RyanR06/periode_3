@@ -9,6 +9,7 @@ public class UiNav : MonoBehaviour
     public GameObject mainMenu;
     public GameObject creditsMenu;
     public GameObject settingsMenu;
+    public GameObject loadMenu;
 
     public AudioSource buttonClick;
 
@@ -38,12 +39,19 @@ public class UiNav : MonoBehaviour
         Application.Quit();
     }
 
+    public void ToLoadMenu()
+    {
+        buttonClick.Play();
+        StartCoroutine(LoadCO());
+    }
+
     public IEnumerator CreditsCO()
     {
         yield return new WaitForSeconds(buttonDelay);
         mainMenu.SetActive(false);
         creditsMenu.SetActive(true);
         settingsMenu.SetActive(false);
+        loadMenu.SetActive(false);
     }
 
     public IEnumerator MenuCO()
@@ -52,6 +60,7 @@ public class UiNav : MonoBehaviour
         mainMenu.SetActive(true);
         creditsMenu.SetActive(false);
         settingsMenu.SetActive(false);
+        loadMenu.SetActive(false);
     }
     public IEnumerator SettingsCO()
     {
@@ -59,5 +68,14 @@ public class UiNav : MonoBehaviour
         settingsMenu.SetActive(true);
         creditsMenu.SetActive(false);
         mainMenu.SetActive(false);
+        loadMenu.SetActive(false);
+    }
+    public IEnumerator LoadCO()
+    {
+        yield return new WaitForSeconds(buttonDelay);
+        mainMenu.SetActive(false);
+        creditsMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+        loadMenu.SetActive(true);
     }
 }

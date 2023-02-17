@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class UiNav : MonoBehaviour
 {
@@ -44,6 +45,19 @@ public class UiNav : MonoBehaviour
         buttonClick.Play();
         StartCoroutine(LoadCO());
     }
+
+    public void NextSceneG()
+    {
+        buttonClick.Play();
+        StartCoroutine(SceneG());
+    }
+
+    public IEnumerator SceneG()
+    {
+        yield return new WaitForSeconds(buttonDelay);
+        SceneManager.LoadScene("Game");
+    }
+
 
     public IEnumerator CreditsCO()
     {

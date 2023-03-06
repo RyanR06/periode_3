@@ -667,8 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonDelay: 0.3
-  transitionDelay: 1
-  loadWait: 4
+  transitionDelay: 0.5
   buttonClick: {fileID: 610318436}
   saveAndLoad: {fileID: 610318435}
   uiNav: {fileID: 0}

@@ -13,6 +13,8 @@ public class SceneLoad : MonoBehaviour
     public SaveAndLoad saveAndLoad;
     public UiNav uiNav;
 
+    public GameObject tempSave;
+
     public void Start()
     {
         DontDestroyOnLoad(this);
@@ -28,11 +30,11 @@ public class SceneLoad : MonoBehaviour
         yield return new WaitForSeconds(buttonDelay);
         SceneManager.LoadScene("Game");
         yield return new WaitForSeconds(transitionDelay);
+        tempSave = GameObject.Find("TempSave");
+        Destroy(tempSave);
         saveAndLoad.playerposition = GameObject.Find("Player").GetComponent<Playerposition>();
         uiNav = GameObject.Find("EventSystem").GetComponent<UiNav>();
-        yield return new WaitForSeconds(transitionDelay);
         uiNav.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();
-        yield return new WaitForSeconds(transitionDelay);
         saveAndLoad.LoadPlayerPos();
     }
 

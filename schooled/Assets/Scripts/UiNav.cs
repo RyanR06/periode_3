@@ -11,15 +11,39 @@ public class UiNav : MonoBehaviour
     public GameObject creditsMenu;
     public GameObject settingsMenu;
     public GameObject loadMenu;
+    public GameObject PauseMenu;
 
     public AudioSource buttonClick;
+    public SaveAndLoad saveAndLoad;
+    public PauseMenu pauseMenu;
 
     public float buttonDelay;
+    public float transitionDelay;
+
+    public KeyCode pauseKey;
+
+    public void SaveGame()
+    {
+        buttonClick.Play();
+        StartCoroutine(SaveCO());
+    }
+
+    public void LoadButtonInGame()
+    {
+        buttonClick.Play();
+        StartCoroutine(LoadCO());
+    }
 
     public void ToCredits()
     {
         buttonClick.Play();
         StartCoroutine (CreditsCO());
+    }
+
+    public void Topause()
+    {
+        buttonClick.Play();
+        StartCoroutine(ToPauseCO());
     }
 
     public void ToMenu()
@@ -37,19 +61,46 @@ public class UiNav : MonoBehaviour
     public void QuitGame()
     {
         buttonClick.Play();
-        Application.Quit();
+        StartCoroutine(QuitGameCO());
     }
 
     public void ToLoadMenu()
     {
         buttonClick.Play();
-        StartCoroutine(LoadCO());
+        StartCoroutine(LoadMenuCO());
     }
 
     public void NextSceneG()
     {
         buttonClick.Play();
         StartCoroutine(SceneG());
+    }
+    public void Continue()
+    {
+        buttonClick.Play();
+        StartCoroutine(ContinueCO());
+        pauseMenu.uiDisabled = true;
+    }
+
+    public IEnumerator ContinueCO()
+    {
+        yield return new WaitForSeconds(buttonDelay);
+        PauseMenu.SetActive(false);
+    }
+
+    public IEnumerator ToPauseCO()
+    {
+        yield return new WaitForSeconds(buttonDelay);
+        PauseMenu.SetActive(true);
+        creditsMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+    }
+
+    public IEnumerator QuitGameCO()
+    {
+        yield return new WaitForSeconds(buttonDelay);
+        Application.Quit();
+        Debug.Log("Quit the application");
     }
 
     public IEnumerator SceneG()
@@ -58,6 +109,17 @@ public class UiNav : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public IEnumerator SaveCO()
+    {
+        yield return new WaitForSeconds(buttonDelay);
+        saveAndLoad.SavePlayerPos();
+    }
+   
+    public IEnumerator LoadCO()
+    {
+        yield return new WaitForSeconds(buttonDelay);
+        saveAndLoad.LoadPlayerPos();
+    }
 
     public IEnumerator CreditsCO()
     {
@@ -66,6 +128,7 @@ public class UiNav : MonoBehaviour
         creditsMenu.SetActive(true);
         settingsMenu.SetActive(false);
         loadMenu.SetActive(false);
+        PauseMenu.SetActive(false);
     }
 
     public IEnumerator MenuCO()
@@ -83,8 +146,9 @@ public class UiNav : MonoBehaviour
         creditsMenu.SetActive(false);
         mainMenu.SetActive(false);
         loadMenu.SetActive(false);
+        PauseMenu.SetActive(false);
     }
-    public IEnumerator LoadCO()
+    public IEnumerator LoadMenuCO()
     {
         yield return new WaitForSeconds(buttonDelay);
         mainMenu.SetActive(false);

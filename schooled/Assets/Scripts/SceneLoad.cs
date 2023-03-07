@@ -36,6 +36,12 @@ public class SceneLoad : MonoBehaviour
         StartCoroutine(LoadAndSceneCO());
     }
 
+    public void NewGame()
+    {
+        buttonClick.Play();
+        StartCoroutine(ContinueAndSceneCO());
+    }
+
     public void Update()
     {
         loadingScreen.color = loadingColor;
@@ -70,6 +76,24 @@ public class SceneLoad : MonoBehaviour
         endLoadScreen = GameObject.Find("EventSystem").GetComponent<EndLoadScreen>();
         endLoadScreen.sceneLoad = this;
         StartCoroutine (endLoadScreen.EndTheLoadScreen());
+    }
+
+    public IEnumerator ContinueAndSceneCO()
+    {
+        beginLoading = true;
+
+        yield return new WaitForSeconds(loadingDelay);
+        SceneManager.LoadScene("Game");
+        yield return new WaitForSeconds(transitionDelay);
+
+        tempSave = GameObject.Find("TempSave");
+        Destroy(tempSave);
+        saveAndLoad.playerposition = GameObject.Find("Player").GetComponent<Playerposition>();
+        uiNav = GameObject.Find("EventSystem").GetComponent<UiNav>();
+        uiNav.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();
+        endLoadScreen = GameObject.Find("EventSystem").GetComponent<EndLoadScreen>();
+        endLoadScreen.sceneLoad = this;
+        StartCoroutine(endLoadScreen.EndTheLoadScreen());
     }
 
 

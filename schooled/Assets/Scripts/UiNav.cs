@@ -15,6 +15,7 @@ public class UiNav : MonoBehaviour
 
     public AudioSource buttonClick;
     public SaveAndLoad saveAndLoad;
+    public SceneLoad sceneLoad;
     public PauseMenu pauseMenu;
 
     public float buttonDelay;
@@ -73,15 +74,25 @@ public class UiNav : MonoBehaviour
     public void NextSceneG()
     {
         buttonClick.Play();
-        StartCoroutine(SceneG());
+        StartCoroutine(sceneLoad.ContinueAndSceneCO());
     }
+
     public void Continue()
     {
         buttonClick.Play();
         StartCoroutine(ContinueCO());
         pauseMenu.uiDisabled = true;
     }
-
+    public void ClearPlayerPrefs()
+    {
+        buttonClick.Play();
+        StartCoroutine(ClearPrefs());
+    }
+    public IEnumerator ClearPrefs()
+    {
+        yield return new WaitForSeconds(buttonDelay);
+        PlayerPrefs.DeleteAll();
+    }
     public IEnumerator ContinueCO()
     {
         yield return new WaitForSeconds(buttonDelay);

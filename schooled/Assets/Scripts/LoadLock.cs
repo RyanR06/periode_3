@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LoadLock : MonoBehaviour
 {
     public Button loadButton;
+    public TextMeshProUGUI saveText;
 
     public SaveAndLoad saveAndLoad;
 
     public Vector3 movementPrefs;
 
     public Vector3 vector0;
+
+    public Color greyOutColor;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +30,8 @@ public class LoadLock : MonoBehaviour
     {
         if (movementPrefs == vector0)
         {
-            //loadButton = GetComponent<Button>().interactable;
+            loadButton.interactable = false;
+            saveText.color = greyOutColor;   
 
         }
     }

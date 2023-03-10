@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 637936716}
   m_Layer: 0
   m_Name: Temp Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1965,6 +1965,7 @@ MonoBehaviour:
   PauseMenu: {fileID: 423476217608927691}
   buttonClick: {fileID: 6291938123095564058}
   saveAndLoad: {fileID: 651573705}
+  sceneLoad: {fileID: 0}
   pauseMenu: {fileID: 6291938124909916095}
   buttonDelay: 0.3
   transitionDelay: 3

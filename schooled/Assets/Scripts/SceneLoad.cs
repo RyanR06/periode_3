@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -69,12 +70,15 @@ public class SceneLoad : MonoBehaviour
 
         tempSave = GameObject.Find("TempSave");
         Destroy(tempSave);
+        saveAndLoad.SetPlayerLocation();
         saveAndLoad.playerposition = GameObject.Find("Player").GetComponent<Playerposition>();
         uiNav = GameObject.Find("EventSystem").GetComponent<UiNav>();
         uiNav.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();
         saveAndLoad.LoadPlayerPos();
         endLoadScreen = GameObject.Find("EventSystem").GetComponent<EndLoadScreen>();
         endLoadScreen.sceneLoad = this;
+        endLoadScreen.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();
+        saveAndLoad.loadLock = GameObject.Find("EventSystem").GetComponent<LoadLock>();
         StartCoroutine (endLoadScreen.EndTheLoadScreen());
     }
 
@@ -88,13 +92,14 @@ public class SceneLoad : MonoBehaviour
 
         tempSave = GameObject.Find("TempSave");
         Destroy(tempSave);
+        saveAndLoad.SetPlayerLocation();
         saveAndLoad.playerposition = GameObject.Find("Player").GetComponent<Playerposition>();
         uiNav = GameObject.Find("EventSystem").GetComponent<UiNav>();
         uiNav.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();
         endLoadScreen = GameObject.Find("EventSystem").GetComponent<EndLoadScreen>();
         endLoadScreen.sceneLoad = this;
+        endLoadScreen.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();
+        saveAndLoad.loadLock = GameObject.Find("EventSystem").GetComponent<LoadLock>();
         StartCoroutine(endLoadScreen.EndTheLoadScreen());
     }
-
-
 }

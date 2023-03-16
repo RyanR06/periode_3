@@ -17,6 +17,9 @@ public class UiNav : MonoBehaviour
     public SaveAndLoad saveAndLoad;
     public SceneLoad sceneLoad;
     public PauseMenu pauseMenu;
+    public LoadLock loadLock;
+
+    public bool EnableDev;
 
     public float buttonDelay;
     public float transitionDelay;
@@ -92,6 +95,18 @@ public class UiNav : MonoBehaviour
     {
         yield return new WaitForSeconds(buttonDelay);
         PlayerPrefs.DeleteAll();
+        loadLock.SetMovements();
+
+        loadLock.SaveCheck();
+
+        saveAndLoad.slot = 1;
+        yield return new WaitForSeconds(0.5f);
+        PlayerPrefs.SetInt("SaveSlot", saveAndLoad.slot);
+
+        if (EnableDev)
+        {
+            Debug.Log("ClearedPrefs");
+        }
     }
     public IEnumerator ContinueCO()
     {

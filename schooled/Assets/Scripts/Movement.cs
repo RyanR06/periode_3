@@ -2,80 +2,75 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Movement : MonoBehaviour
 {
 
-    public float playerSpeed = 5;
-    public float jumpHeight = 3;
-    public float startSpeed;
-    
-    private float hor;
-    private float vert;
-    private Vector3 moveDirection;
+    public float h;
+    public float v;
 
-    private Rigidbody rB;
-    private Vector3 jump;
-    private float jumpB;
-    private bool midAir;
+    public float rotationX;
+    public Vector3 mouse;
+    public float sensitivity;
+    public Transform cameraa;
+    public float rotateX;
+    public float rotateY;
 
-    void Start()
+    public Vector3 v3;
+    public float speed;
+    public bool onGround;
+    public Rigidbody rb;
+    public float jumpForce;
+    public Vector3 jump;
+    public Vector3 v2;
+    public void Start()
     {
-        rB = GetComponent<Rigidbody>();
+        Cursor.lockState = CursorLockMode.Locked;
+        rb = GetComponent<Rigidbody>();
+        jump = new Vector3(0, jumpForce, 0);
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        onGround = false;
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        onGround = true;
 
-        startSpeed = playerSpeed;
-
-        jump.y = jumpHeight;
     }
 
-
-    void Update()
+    public void Update()
     {
-        hor = Input.GetAxis("Horizontal");
-        vert = Input.GetAxis("Vertical");
+        h = Input.GetAxis("Horizontal");
+        v = Input.GetAxis("Vertical");
 
-        moveDirection.x = hor;
-        moveDirection.z = vert;
-        transform.Translate(moveDirection * Time.deltaTime * playerSpeed);
+        rotateX = Input.GetAxis("Mouse X");
+        rotateY = Input.GetAxis("Mouse Y");
 
-        if (jumpB == 1)
+        v3.x = h;
+        v3.z = v;
+
+        mouse.y = rotateX;
+        v2.x = -rotateY;
+
+        transform.Translate(v3 * Time.deltaTime * speed);
+        transform.Rotate(mouse * Time.deltaTime * sensitivity);
+        cameraa.transform.Rotate(v2 * Time.deltaTime * sensitivity);
+
+        if (Input.GetKeyDown(KeyCode.Space) && onGround)
         {
-            rB.velocity = jump;
+            rb.AddForce(jump * jumpForce, ForceMode.Impulse);
+            onGround = false;
         }
 
-        if (Input.GetKeyDown("space") && midAir)
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            rB.AddForce(jump * jumpHeight, ForceMode.Impulse);
+            speed = 10f;
         }
-
-    }
-    void OnCollisionStay(Collision collision)
-    {
-        if ( collision.gameObject.tag == "Ground")
+        else
         {
-            midAir = true;
+            speed = 5;
         }
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            midAir = false;
-        }
-    }
-
-    public void Boost(float power, float time)
-    {
-        StartCoroutine(DoBoost(power, time));
-    }
-
-    private IEnumerator DoBoost (float power, float time)
-    {
-        playerSpeed *= power;
-        yield return new WaitForSeconds(time);
-        playerSpeed = startSpeed;
     }
 
 }

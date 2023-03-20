@@ -75,7 +75,14 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(pauseKey))
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            if(Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 

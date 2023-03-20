@@ -24,6 +24,11 @@ public class SceneLoad : MonoBehaviour
     public bool beginLoading;
     public bool endLoading;
 
+    public GameObject loadingGameObjects;
+    public Slider progressSlider;
+    public TextMeshProUGUI loadingText;
+    public string levelLoad;
+
     public GameObject tempSave;
 
     public void Start()
@@ -56,6 +61,7 @@ public class SceneLoad : MonoBehaviour
             if (endLoading == true)
             {
                 loadingColor.a -= loadingTransition;
+
             }
         }
     }
@@ -65,7 +71,7 @@ public class SceneLoad : MonoBehaviour
         beginLoading = true;
 
         yield return new WaitForSeconds(loadingDelay);
-        SceneManager.LoadScene("Game");
+        StartCoroutine(LoadSceneAsync());
         yield return new WaitForSeconds(transitionDelay);
 
         tempSave = GameObject.Find("TempSave");
@@ -82,12 +88,27 @@ public class SceneLoad : MonoBehaviour
         StartCoroutine (endLoadScreen.EndTheLoadScreen());
     }
 
+    IEnumerator LoadSceneAsync()
+    {
+        loadingGameObjects.SetActive(true);
+        AsyncOperation op = SceneManager.LoadSceneAsync(levelLoad);
+
+        while (!op.isDone)
+        {
+            float progress = Mathf.Clamp01(op.progress / .9f);
+            progressSlider.value = progress;
+            loadingText.text = progress * 100f + "%";
+
+            yield return null;
+        }
+        loadingGameObjects.SetActive(false);
+    }
     public IEnumerator ContinueAndSceneCO()
     {
         beginLoading = true;
 
         yield return new WaitForSeconds(loadingDelay);
-        SceneManager.LoadScene("Game");
+        StartCoroutine(LoadSceneAsync());
         yield return new WaitForSeconds(transitionDelay);
 
         tempSave = GameObject.Find("TempSave");

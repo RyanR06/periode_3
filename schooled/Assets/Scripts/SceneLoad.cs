@@ -70,7 +70,7 @@ public class SceneLoad : MonoBehaviour
     {
         beginLoading = true;
 
-        yield return new WaitForSeconds(loadingDelay);
+        //yield return new WaitForSeconds(loadingDelay);
         StartCoroutine(LoadSceneAsync());
         yield return new WaitForSeconds(transitionDelay);
 
@@ -92,6 +92,10 @@ public class SceneLoad : MonoBehaviour
     {
         loadingGameObjects.SetActive(true);
         AsyncOperation op = SceneManager.LoadSceneAsync(levelLoad);
+        
+        op.allowSceneActivation = false;
+        yield return new WaitForSeconds(2);
+        op.allowSceneActivation = true;
 
         while (!op.isDone)
         {
@@ -114,6 +118,7 @@ public class SceneLoad : MonoBehaviour
         tempSave = GameObject.Find("TempSave");
         Destroy(tempSave);
         saveAndLoad.SetPlayerLocation();
+        yield return new WaitForSeconds(2);
         saveAndLoad.playerposition = GameObject.Find("Player").GetComponent<Playerposition>();
         uiNav = GameObject.Find("EventSystem").GetComponent<UiNav>();
         uiNav.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();

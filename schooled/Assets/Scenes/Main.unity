@@ -2057,6 +2057,7 @@ MonoBehaviour:
   uiNav: {fileID: 0}
   loadingScreen: {fileID: 307418440}
   loadingTransition: 0.04
+  endLoadingTransition: 0.12
   loadingDelay: 0
   loadscreenTime: 1
   loadingColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 0}

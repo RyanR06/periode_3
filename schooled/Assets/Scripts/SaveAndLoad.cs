@@ -63,6 +63,8 @@ public class SaveAndLoad : MonoBehaviour
 
     public void SavePlayerPos()
     {
+        playerposition.PlayerPosXYZ();
+
         playerLoc.x = PlayerPrefs.GetFloat("PlayerPosX" + slot);
         playerLoc.y = PlayerPrefs.GetFloat("PlayerPosY" + slot);
         playerLoc.z = PlayerPrefs.GetFloat("PlayerPosZ" + slot);

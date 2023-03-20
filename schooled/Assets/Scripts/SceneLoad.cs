@@ -18,6 +18,7 @@ public class SceneLoad : MonoBehaviour
     public Image loadingScreen;
 
     public float loadingTransition;
+    public float endLoadingTransition;
     public float loadingDelay;
     public float loadscreenTime;
     public Color loadingColor;
@@ -60,7 +61,7 @@ public class SceneLoad : MonoBehaviour
         {
             if (endLoading == true)
             {
-                loadingColor.a -= loadingTransition;
+                loadingColor.a -= endLoadingTransition;
 
             }
         }
@@ -70,7 +71,6 @@ public class SceneLoad : MonoBehaviour
     {
         beginLoading = true;
 
-        //yield return new WaitForSeconds(loadingDelay);
         StartCoroutine(LoadSceneAsync());
         yield return new WaitForSeconds(transitionDelay);
 

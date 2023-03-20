@@ -10,7 +10,7 @@ public class Playerposition : MonoBehaviour
 
     public Transform Player;
 
-    void Update()
+    public void PlayerPosXYZ()
     {
         playerPosx = transform.position.x;
         playerPosy = transform.position.y;

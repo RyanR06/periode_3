@@ -23,9 +23,10 @@ public class Movement : MonoBehaviour
     public float jumpForce;
     public Vector3 jump;
     public Vector3 v2;
+
+    public KeyCode pauseKey;
     public void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         rb = GetComponent<Rigidbody>();
         jump = new Vector3(0, jumpForce, 0);
     }
@@ -70,6 +71,11 @@ public class Movement : MonoBehaviour
         else
         {
             speed = 5;
+        }
+
+        if (Input.GetKeyDown(pauseKey))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 

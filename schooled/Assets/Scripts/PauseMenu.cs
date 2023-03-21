@@ -25,7 +25,27 @@ public class PauseMenu : MonoBehaviour
             {
                 uiNav.Topause();
                 uiDisabled = false;
+                StartCoroutine(ChangeTime());
             }
+            else
+            {
+                uiNav.LeavePause();
+                uiDisabled = true;
+                StartCoroutine(ChangeTime());
+            }
+        }
+    }
+
+    public IEnumerator ChangeTime()
+    {
+        yield return new WaitForSeconds(1);
+        if (!uiDisabled)
+        {
+            Time.timeScale = 0f;
+        }
+        else if (uiDisabled)
+        {
+            Time.timeScale = 1f;
         }
     }
 }

@@ -121,6 +121,13 @@ public class UiNav : MonoBehaviour
         creditsMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
+    public IEnumerator LeavePause()
+    {
+        yield return new WaitForSeconds(buttonDelay);
+        PauseMenu.SetActive(false);
+        creditsMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+    }
 
     public IEnumerator QuitGameCO()
     {

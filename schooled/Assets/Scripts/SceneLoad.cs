@@ -77,6 +77,7 @@ public class SceneLoad : MonoBehaviour
         tempSave = GameObject.Find("TempSave");
         Destroy(tempSave);
         saveAndLoad.SetPlayerLocation();
+        yield return new WaitForSeconds(2);
         saveAndLoad.playerposition = GameObject.Find("Player").GetComponent<Playerposition>();
         uiNav = GameObject.Find("EventSystem").GetComponent<UiNav>();
         uiNav.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();

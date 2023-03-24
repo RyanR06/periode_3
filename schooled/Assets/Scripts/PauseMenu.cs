@@ -19,33 +19,43 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ContinueOrStop();
+    }
+
+    public void ContinueOrStop()
+    {
         if (Input.GetKeyDown(uiNav.pauseKey))
         {
             if (uiDisabled)
             {
                 uiNav.Topause();
                 uiDisabled = false;
-                StartCoroutine(ChangeTime());
+                StartCoroutine(StopTime());
+                Cursor.lockState = CursorLockMode.None;
             }
             else
             {
-                uiNav.LeavePause();
+                ResumeTheTime();
                 uiDisabled = true;
-                StartCoroutine(ChangeTime());
+                uiNav.LeavePause();
+                Cursor.lockState = CursorLockMode.Locked;
             }
         }
     }
-
-    public IEnumerator ChangeTime()
+    public void ResumeTheTime()
     {
-        yield return new WaitForSeconds(1);
+        Time.timeScale = 1f;
+        uiNav.LeavePause();
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public IEnumerator StopTime()
+    {
+        yield return new WaitForSeconds(0.3f);
         if (!uiDisabled)
         {
+
             Time.timeScale = 0f;
-        }
-        else if (uiDisabled)
-        {
-            Time.timeScale = 1f;
         }
     }
 }

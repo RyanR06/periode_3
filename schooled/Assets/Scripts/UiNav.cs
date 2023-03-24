@@ -112,6 +112,7 @@ public class UiNav : MonoBehaviour
     {
         yield return new WaitForSeconds(buttonDelay);
         PauseMenu.SetActive(false);
+        pauseMenu.ContinueOrStop();
     }
 
     public IEnumerator ToPauseCO()

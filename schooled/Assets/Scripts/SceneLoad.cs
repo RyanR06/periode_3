@@ -32,6 +32,11 @@ public class SceneLoad : MonoBehaviour
 
     public GameObject tempSave;
 
+    public void ToMainMenu()
+    {
+        buttonClick.Play();
+        StartCoroutine(ToMainMenuCO());
+    }
     public void Start()
     {
         DontDestroyOnLoad(this);
@@ -129,4 +134,25 @@ public class SceneLoad : MonoBehaviour
         saveAndLoad.loadLock = GameObject.Find("EventSystem").GetComponent<LoadLock>();
         StartCoroutine(endLoadScreen.EndTheLoadScreen());
     }
+
+    public IEnumerator ToMainMenuCO()
+    {
+        beginLoading = true;
+
+        yield return new WaitForSeconds(loadingDelay);
+        StartCoroutine(LoadSceneAsync());
+        yield return new WaitForSeconds(transitionDelay);
+
+        saveAndLoad.SetPlayerLocation();
+        yield return new WaitForSeconds(2);
+        saveAndLoad.playerposition = GameObject.Find("Player").GetComponent<Playerposition>();
+        uiNav = GameObject.Find("EventSystem").GetComponent<UiNav>();
+        uiNav.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();
+        endLoadScreen = GameObject.Find("EventSystem").GetComponent<EndLoadScreen>();
+        endLoadScreen.sceneLoad = this;
+        endLoadScreen.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();
+        saveAndLoad.loadLock = GameObject.Find("EventSystem").GetComponent<LoadLock>();
+        StartCoroutine(endLoadScreen.EndTheLoadScreen());
+    }
 }
+

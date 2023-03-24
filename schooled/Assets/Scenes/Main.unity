@@ -3090,6 +3090,7 @@ GameObject:
   - component: {fileID: 974879501}
   - component: {fileID: 974879502}
   - component: {fileID: 1235912502}
+  - component: {fileID: 1235912503}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -3725,6 +3726,22 @@ MonoBehaviour:
   vector0: {x: 0, y: 0, z: 0}
   greyOutColor: {r: 0.5686275, g: 0.5686275, b: 0.5686275, a: 1}
   normalLoadButtonColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1235912503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974879495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ff71e2f18d70e419b9e4b73b85f393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoad: {fileID: 610318437}
+  loadLock: {fileID: 1235912502}
+  saveAndLoad: {fileID: 610318435}
+  sceneTesting: 0
 --- !u!1 &1278017181
 GameObject:
   m_ObjectHideFlags: 0

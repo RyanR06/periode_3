@@ -34,6 +34,7 @@ public class UiNav : MonoBehaviour
 
     public void LoadButtonInGame()
     {
+        Time.timeScale = 1f;
         buttonClick.Play();
         StartCoroutine(LoadCO());
     }
@@ -132,6 +133,7 @@ public class UiNav : MonoBehaviour
 
     public IEnumerator QuitGameCO()
     {
+        Time.timeScale = 1f;
         yield return new WaitForSeconds(buttonDelay);
         Application.Quit();
         Debug.Log("Quit the application");
@@ -145,12 +147,14 @@ public class UiNav : MonoBehaviour
 
     public IEnumerator SaveCO()
     {
+        Time.timeScale = 1f;
         yield return new WaitForSeconds(buttonDelay);
         saveAndLoad.SavePlayerPos();
     }
    
     public IEnumerator LoadCO()
     {
+        Time.timeScale = 1f;
         yield return new WaitForSeconds(buttonDelay);
         saveAndLoad.LoadPlayerPos();
     }

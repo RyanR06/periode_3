@@ -21,6 +21,7 @@ public class SaveAndLoad : MonoBehaviour
     public int slot;
 
     public LoadLock loadLock;
+    public XML_SaveData xMLData;
 
     public Button GameLoadbutton;
     public TextMeshProUGUI LoadText;
@@ -80,9 +81,11 @@ public class SaveAndLoad : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerPosZ" + slot, playerposition.playerPosz);
         PlayerPrefs.SetInt("SaveSlot", slot);
 
+        UpdateXMLData();
         SaveData();
         CreateNewSave();
         loadLock.SetMovements();
+        Time.timeScale = 0f;
     }
 
     public void LoadPlayerPos()
@@ -91,6 +94,7 @@ public class SaveAndLoad : MonoBehaviour
         
         SetPlayerLocation();
         LoadData();
+        Time.timeScale = 0f;
     }
 
     public void SetSavePrefs()
@@ -111,6 +115,7 @@ public class SaveAndLoad : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerPosY" + 4, Adminpos.y);
         PlayerPrefs.SetFloat("PlayerPosZ" + 4, Adminpos.z);
 
+        UpdateXMLData();
         loadLock.SetMovements();
         loadLock.SaveCheck();
         loadLock.ToSaves();
@@ -153,6 +158,7 @@ public class SaveAndLoad : MonoBehaviour
         }
         catch
         {
+            UpdateXMLData();
             SaveData();
         }
     }
@@ -170,20 +176,21 @@ public class SaveAndLoad : MonoBehaviour
         newsave.slot = PlayerPrefs.GetInt("SaveSlot");
     }
 
+    public void UpdateXMLData()
+    {
+        xMLData.slot = PlayerPrefs.GetInt("SaveSlot");
+        xMLData.playerLoc.x = PlayerPrefs.GetFloat("PlayerPosX" + slot);
+        xMLData.playerLoc.y = PlayerPrefs.GetFloat("PlayerPosY" + slot);
+        xMLData.playerLoc.z = PlayerPrefs.GetFloat("PlayerPosZ" + slot);
+    }
+}
     [System.Serializable]
     public class XML_SaveData
     {
+        public SaveAndLoad saveAndLoad;
+
         public int slot;
 
         public Vector3 playerLoc;
-        
-        public void Start()
-        {
-            slot = PlayerPrefs.GetInt("SaveSlot");
-
-            playerLoc.x = PlayerPrefs.GetFloat("PlayerPosX" + slot);
-            playerLoc.y = PlayerPrefs.GetFloat("PlayerPosY" + slot);
-            playerLoc.z = PlayerPrefs.GetFloat("PlayerPosZ" + slot);
-        }
     }
-}
+

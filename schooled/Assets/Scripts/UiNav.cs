@@ -29,7 +29,7 @@ public class UiNav : MonoBehaviour
     public void SaveGame()
     {
         buttonClick.Play();
-        StartCoroutine(SaveCO());
+        SaveCO();
     }
 
     public void LoadButtonInGame()
@@ -145,10 +145,10 @@ public class UiNav : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-    public IEnumerator SaveCO()
+    public void SaveCO()
     {
         Time.timeScale = 1f;
-        yield return new WaitForSeconds(buttonDelay);
+        //yield return new WaitForSeconds(buttonDelay);
         saveAndLoad.SavePlayerPos();
     }
    

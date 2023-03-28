@@ -26,7 +26,7 @@ public class SaveAndLoad : MonoBehaviour
     public Button GameLoadbutton;
     public TextMeshProUGUI LoadText;
 
-    private XML_SaveData _SaveData = new XML_SaveData();
+    private XML_SaveData _SaveData;
 
 
     public void Start()
@@ -137,11 +137,15 @@ public class SaveAndLoad : MonoBehaviour
 
     public void SaveData()
     {
+        XML_SaveData tempSave = new XML_SaveData();
+        tempSave.slot = PlayerPrefs.GetInt("SaveSlot");
+        tempSave.playerLoc = playerLoc;
+
         XmlSerializer serializer = new XmlSerializer(typeof(XML_SaveData));
 
         using (FileStream stream = new FileStream(Application.persistentDataPath + "/SaveData.xml", FileMode.Create))
         {
-            serializer.Serialize(stream, _SaveData);
+            serializer.Serialize(stream, tempSave);
         }
     }
 
@@ -187,10 +191,7 @@ public class SaveAndLoad : MonoBehaviour
     [System.Serializable]
     public class XML_SaveData
     {
-        public SaveAndLoad saveAndLoad;
-
         public int slot;
 
         public Vector3 playerLoc;
     }
-

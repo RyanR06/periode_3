@@ -85,7 +85,6 @@ public class SaveAndLoad : MonoBehaviour
         SaveData();
         CreateNewSave();
         loadLock.SetMovements();
-        Time.timeScale = 0f;
     }
 
     public void LoadPlayerPos()
@@ -94,7 +93,7 @@ public class SaveAndLoad : MonoBehaviour
         
         SetPlayerLocation();
         LoadData();
-        Time.timeScale = 0f;
+        StartCoroutine(ResumePause());
     }
 
     public void SetSavePrefs()
@@ -137,13 +136,14 @@ public class SaveAndLoad : MonoBehaviour
 
     public void SaveData()
     {
+        StartCoroutine(ResumePause());
         XML_SaveData tempSave = new XML_SaveData();
         tempSave.slot = PlayerPrefs.GetInt("SaveSlot");
         tempSave.playerLoc = playerLoc;
 
         XmlSerializer serializer = new XmlSerializer(typeof(XML_SaveData));
 
-        using (FileStream stream = new FileStream(Application.persistentDataPath + "/SaveData.xml", FileMode.Create))
+        using (FileStream stream = new FileStream(Application.persistentDataPath + "/SaveData" +slot + ".xml", FileMode.Create))
         {
             serializer.Serialize(stream, tempSave);
         }
@@ -155,7 +155,7 @@ public class SaveAndLoad : MonoBehaviour
         {
             XmlSerializer serializer = new XmlSerializer(typeof(XML_SaveData));
 
-            using (FileStream stream = new FileStream(Application.persistentDataPath + "/SaveData.xml", FileMode.Open))
+            using (FileStream stream = new FileStream(Application.persistentDataPath + "/SaveData" + slot + ".xml", FileMode.Open))
             {
                 _SaveData = serializer.Deserialize(stream) as XML_SaveData;
             }
@@ -186,6 +186,12 @@ public class SaveAndLoad : MonoBehaviour
         xMLData.playerLoc.x = PlayerPrefs.GetFloat("PlayerPosX" + slot);
         xMLData.playerLoc.y = PlayerPrefs.GetFloat("PlayerPosY" + slot);
         xMLData.playerLoc.z = PlayerPrefs.GetFloat("PlayerPosZ" + slot);
+    }
+
+    public IEnumerator ResumePause()
+    {
+        yield return new WaitForSeconds(1);
+        Time.timeScale = 0f;
     }
 }
     [System.Serializable]

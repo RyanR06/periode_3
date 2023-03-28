@@ -74,7 +74,13 @@ public class UiNav : MonoBehaviour
         buttonClick.Play();
         StartCoroutine(LoadMenuCO());
     }
-
+    /*
+    public void ToMainMenu()
+    {
+        buttonClick.Play();
+        StartCoroutine(LoadMenuCO());
+    }
+    */
     public void NextSceneG()
     {
         buttonClick.Play();
@@ -118,10 +124,12 @@ public class UiNav : MonoBehaviour
 
     public IEnumerator ToPauseCO()
     {
+        Time.timeScale = 1f;
         yield return new WaitForSeconds(buttonDelay);
         PauseMenu.SetActive(true);
         creditsMenu.SetActive(false);
         settingsMenu.SetActive(false);
+        Time.timeScale = 0f;
     }
     public IEnumerator LeavePause()
     {
@@ -171,20 +179,24 @@ public class UiNav : MonoBehaviour
 
     public IEnumerator MenuCO()
     {
+        Time.timeScale = 1f;
         yield return new WaitForSeconds(buttonDelay);
         mainMenu.SetActive(true);
         creditsMenu.SetActive(false);
         settingsMenu.SetActive(false);
         loadMenu.SetActive(false);
+        Time.timeScale = 0f;
     }
     public IEnumerator SettingsCO()
     {
+        Time.timeScale = 1f;
         yield return new WaitForSeconds(buttonDelay);
         settingsMenu.SetActive(true);
         creditsMenu.SetActive(false);
         mainMenu.SetActive(false);
         loadMenu.SetActive(false);
         PauseMenu.SetActive(false);
+        Time.timeScale = 0f;
     }
     public IEnumerator LoadMenuCO()
     {

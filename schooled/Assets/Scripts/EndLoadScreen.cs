@@ -24,13 +24,6 @@ public class EndLoadScreen : MonoBehaviour
         yield return new WaitForSeconds(sceneLoad.loadingDelay);
         sceneLoad.endLoading = true;
         sceneLoad.beginLoading = false;
-        StartCoroutine(SetButtons());
-    }
-
-    public IEnumerator SetButtons()
-    {
-        yield return new WaitForSeconds(3);
-        //saveAndLoad.GameLoadbutton = GameObject.Find("LoadButton").GetComponent<Button>();
-        //saveAndLoad.LoadText = GameObject.Find("LoadText1").GetComponent<TextMeshProUGUI>();
+        Time.timeScale = 1f;
     }
 }

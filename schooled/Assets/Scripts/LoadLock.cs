@@ -32,6 +32,8 @@ public class LoadLock : MonoBehaviour
     }
     public void SetMovements()
     {
+        Time.timeScale = 1f;
+
         movementPrefs1.x = PlayerPrefs.GetFloat("PlayerPosX" + 1);
         movementPrefs1.y = PlayerPrefs.GetFloat("PlayerPosY" + 1);
         movementPrefs1.z = PlayerPrefs.GetFloat("PlayerPosZ" + 1);

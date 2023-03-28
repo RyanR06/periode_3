@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Xml.Serialization;
+using System.IO;
+using UnityEngine.LowLevel;
 
 public class SaveAndLoad : MonoBehaviour
 {
@@ -18,9 +21,13 @@ public class SaveAndLoad : MonoBehaviour
     public int slot;
 
     public LoadLock loadLock;
+    public XML_SaveData xMLData;
 
     public Button GameLoadbutton;
     public TextMeshProUGUI LoadText;
+
+    private XML_SaveData _SaveData = new XML_SaveData();
+
 
     public void Start()
     {
@@ -73,15 +80,21 @@ public class SaveAndLoad : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerPosY" + slot, playerposition.playerPosy);
         PlayerPrefs.SetFloat("PlayerPosZ" + slot, playerposition.playerPosz);
         PlayerPrefs.SetInt("SaveSlot", slot);
-        
+
+        UpdateXMLData();
+        SaveData();
+        CreateNewSave();
         loadLock.SetMovements();
+        Time.timeScale = 0f;
     }
 
     public void LoadPlayerPos()
     {
-        SetPlayerLocation();
-
         playerposition.Player.position = playerLoc;
+        
+        SetPlayerLocation();
+        LoadData();
+        Time.timeScale = 0f;
     }
 
     public void SetSavePrefs()
@@ -102,6 +115,7 @@ public class SaveAndLoad : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerPosY" + 4, Adminpos.y);
         PlayerPrefs.SetFloat("PlayerPosZ" + 4, Adminpos.z);
 
+        UpdateXMLData();
         loadLock.SetMovements();
         loadLock.SaveCheck();
         loadLock.ToSaves();
@@ -120,4 +134,63 @@ public class SaveAndLoad : MonoBehaviour
         GameLoadbutton = GameObject.Find("LoadButton").GetComponent<Button>();
         LoadText = GameObject.Find("LoadText1").GetComponent<TextMeshProUGUI>();
     }
+
+    public void SaveData()
+    {
+        XmlSerializer serializer = new XmlSerializer(typeof(XML_SaveData));
+
+        using (FileStream stream = new FileStream(Application.persistentDataPath + "/SaveData.xml", FileMode.Create))
+        {
+            serializer.Serialize(stream, _SaveData);
+        }
+    }
+
+    public void LoadData()
+    {
+        try
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(XML_SaveData));
+
+            using (FileStream stream = new FileStream(Application.persistentDataPath + "/SaveData.xml", FileMode.Open))
+            {
+                _SaveData = serializer.Deserialize(stream) as XML_SaveData;
+            }
+        }
+        catch
+        {
+            UpdateXMLData();
+            SaveData();
+        }
+    }
+
+    public XML_SaveData GetSaveData()
+    {
+        return _SaveData;
+    }
+    public void CreateNewSave()
+    {
+        XML_SaveData newsave = new XML_SaveData();
+        newsave.playerLoc.x = PlayerPrefs.GetFloat("PlayerPosX" + slot);
+        newsave.playerLoc.y = PlayerPrefs.GetFloat("PlayerPosY" + slot);
+        newsave.playerLoc.z = PlayerPrefs.GetFloat("PlayerPosZ" + slot);
+        newsave.slot = PlayerPrefs.GetInt("SaveSlot");
+    }
+
+    public void UpdateXMLData()
+    {
+        xMLData.slot = PlayerPrefs.GetInt("SaveSlot");
+        xMLData.playerLoc.x = PlayerPrefs.GetFloat("PlayerPosX" + slot);
+        xMLData.playerLoc.y = PlayerPrefs.GetFloat("PlayerPosY" + slot);
+        xMLData.playerLoc.z = PlayerPrefs.GetFloat("PlayerPosZ" + slot);
+    }
 }
+    [System.Serializable]
+    public class XML_SaveData
+    {
+        public SaveAndLoad saveAndLoad;
+
+        public int slot;
+
+        public Vector3 playerLoc;
+    }
+

@@ -21,6 +21,7 @@ public class SaveAndLoad : MonoBehaviour
     public int slot;
 
     public LoadLock loadLock;
+    public SceneLoad sceneLoad;
     public XML_SaveData xMLData;
 
     public Button GameLoadbutton;
@@ -190,8 +191,15 @@ public class SaveAndLoad : MonoBehaviour
 
     public IEnumerator ResumePause()
     {
+        if(sceneLoad.dontSetTime == true)
+        {
+
+        }
+        else
+        {
         yield return new WaitForSeconds(1);
         Time.timeScale = 0f;
+        }
     }
 }
     [System.Serializable]

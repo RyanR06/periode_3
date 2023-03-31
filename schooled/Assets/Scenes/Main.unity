@@ -1940,7 +1940,6 @@ MonoBehaviour:
   slot: 1
   loadLock: {fileID: 1235912502}
   xMLData:
-    saveAndLoad: {fileID: 0}
     slot: 0
     playerLoc: {x: 0, y: 0, z: 0}
   GameLoadbutton: {fileID: 0}
@@ -2057,8 +2056,9 @@ MonoBehaviour:
   transitionDelay: 0.5
   buttonClick: {fileID: 610318436}
   saveAndLoad: {fileID: 610318435}
-  endLoadScreen: {fileID: 0}
-  uiNav: {fileID: 0}
+  endLoadScreen: {fileID: 1235912503}
+  uiNav: {fileID: 974879499}
+  loadCanvas: {fileID: 1056519599}
   loadingScreen: {fileID: 307418440}
   loadingTransition: 0.04
   endLoadingTransition: 0.12

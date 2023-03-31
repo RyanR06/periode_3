@@ -74,13 +74,13 @@ public class UiNav : MonoBehaviour
         buttonClick.Play();
         StartCoroutine(LoadMenuCO());
     }
-    /*
+ 
     public void ToMainMenu()
     {
         buttonClick.Play();
-        StartCoroutine(LoadMenuCO());
+        StartCoroutine(MainMenuCO());
     }
-    */
+    
     public void NextSceneG()
     {
         buttonClick.Play();
@@ -205,5 +205,16 @@ public class UiNav : MonoBehaviour
         creditsMenu.SetActive(false);
         settingsMenu.SetActive(false);
         loadMenu.SetActive(true);
+    }
+
+    public IEnumerator MainMenuCO()
+    {
+        Time.timeScale = 1f;
+        sceneLoad = GameObject.Find("DontDestroy Manager").GetComponent<SceneLoad>();
+        yield return new WaitForSeconds(buttonDelay);
+        sceneLoad.levelLoad = "main";
+        StartCoroutine(sceneLoad.ToMainMenuCO());
+
+
     }
 }

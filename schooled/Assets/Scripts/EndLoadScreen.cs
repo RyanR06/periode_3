@@ -24,6 +24,8 @@ public class EndLoadScreen : MonoBehaviour
         yield return new WaitForSeconds(sceneLoad.loadingDelay);
         sceneLoad.endLoading = true;
         sceneLoad.beginLoading = false;
+        yield return new WaitForSeconds(3);
+        sceneLoad.endLoading = false;
         Time.timeScale = 1f;
     }
 }

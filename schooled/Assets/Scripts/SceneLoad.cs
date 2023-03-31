@@ -15,6 +15,8 @@ public class SceneLoad : MonoBehaviour
     public SaveAndLoad saveAndLoad;
     public EndLoadScreen endLoadScreen;
     public UiNav uiNav;
+
+    public Canvas loadCanvas;
     public Image loadingScreen;
 
     public float loadingTransition;
@@ -24,6 +26,7 @@ public class SceneLoad : MonoBehaviour
     public Color loadingColor;
     public bool beginLoading;
     public bool endLoading;
+    public bool dontSetTime;
 
     public GameObject loadingGameObjects;
     public Slider progressSlider;
@@ -32,11 +35,6 @@ public class SceneLoad : MonoBehaviour
 
     public GameObject tempSave;
 
-    public void ToMainMenu()
-    {
-        buttonClick.Play();
-        StartCoroutine(ToMainMenuCO());
-    }
     public void Start()
     {
         DontDestroyOnLoad(this);
@@ -135,24 +133,20 @@ public class SceneLoad : MonoBehaviour
         StartCoroutine(endLoadScreen.EndTheLoadScreen());
     }
 
+    
     public IEnumerator ToMainMenuCO()
     {
         beginLoading = true;
 
         yield return new WaitForSeconds(loadingDelay);
         StartCoroutine(LoadSceneAsync());
-        yield return new WaitForSeconds(transitionDelay);
 
-        saveAndLoad.SetPlayerLocation();
+        Time.timeScale = 1f;
+
         yield return new WaitForSeconds(2);
-        saveAndLoad.playerposition = GameObject.Find("Player").GetComponent<Playerposition>();
-        uiNav = GameObject.Find("EventSystem").GetComponent<UiNav>();
-        uiNav.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();
-        endLoadScreen = GameObject.Find("EventSystem").GetComponent<EndLoadScreen>();
-        endLoadScreen.sceneLoad = this;
-        endLoadScreen.saveAndLoad = GameObject.Find("DontDestroy Manager").GetComponent<SaveAndLoad>();
-        saveAndLoad.loadLock = GameObject.Find("EventSystem").GetComponent<LoadLock>();
-        StartCoroutine(endLoadScreen.EndTheLoadScreen());
+        Destroy(loadCanvas.gameObject);
+        Destroy(this.gameObject);
     }
+     
 }
 

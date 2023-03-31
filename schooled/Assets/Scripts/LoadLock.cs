@@ -11,9 +11,9 @@ public class LoadLock : MonoBehaviour
 
     public SaveAndLoad saveAndLoad;
 
-    public Vector3 movementPrefs1, movementPrefs2, movementPrefs3, movementPrefs4;
+    private Vector3 movementPrefs1, movementPrefs2, movementPrefs3, movementPrefs4;
 
-    public Vector3 vector0;
+    private Vector3 vector0;
 
     public Color greyOutColor, normalLoadButtonColor;
 

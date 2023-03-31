@@ -11,7 +11,8 @@ public class UiNav : MonoBehaviour
     public GameObject creditsMenu;
     public GameObject settingsMenu;
     public GameObject loadMenu;
-    public GameObject PauseMenu;
+    public GameObject pauseMenu1;
+    public GameObject controlsMenu;
 
     public AudioSource buttonClick;
     public SaveAndLoad saveAndLoad;
@@ -24,7 +25,19 @@ public class UiNav : MonoBehaviour
     public float buttonDelay;
     public float transitionDelay;
 
+    public TextMeshProUGUI pressESCText;
+    private bool hasPressedESC;
+
     public KeyCode pauseKey;
+
+    public void Update()
+    {
+     if(Input.GetKeyDown(KeyCode.Escape) && hasPressedESC == false)
+        {
+            hasPressedESC = true;
+            pressESCText.gameObject.SetActive(false);
+        }   
+    }
 
     public void SaveGame()
     {
@@ -61,6 +74,11 @@ public class UiNav : MonoBehaviour
     {
         buttonClick.Play();
         StartCoroutine(SettingsCO());
+    }
+    public void ToControls()
+    {
+        buttonClick.Play();
+        StartCoroutine(ControlsCO());
     }
 
     public void QuitGame()
@@ -118,7 +136,7 @@ public class UiNav : MonoBehaviour
     public IEnumerator ContinueCO()
     {
         yield return new WaitForSeconds(buttonDelay);
-        PauseMenu.SetActive(false);
+        pauseMenu1.SetActive(false);
         pauseMenu.ContinueOrStop();
     }
 
@@ -126,7 +144,7 @@ public class UiNav : MonoBehaviour
     {
         Time.timeScale = 1f;
         yield return new WaitForSeconds(buttonDelay);
-        PauseMenu.SetActive(true);
+        pauseMenu1.SetActive(true);
         creditsMenu.SetActive(false);
         settingsMenu.SetActive(false);
         Time.timeScale = 0f;
@@ -134,7 +152,7 @@ public class UiNav : MonoBehaviour
     public IEnumerator LeavePause()
     {
         yield return new WaitForSeconds(buttonDelay);
-        PauseMenu.SetActive(false);
+        pauseMenu1.SetActive(false);
         creditsMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
@@ -174,8 +192,9 @@ public class UiNav : MonoBehaviour
         creditsMenu.SetActive(true);
         settingsMenu.SetActive(false);
         loadMenu.SetActive(false);
-        PauseMenu.SetActive(false);
+        pauseMenu1.SetActive(false);
     }
+
 
     public IEnumerator MenuCO()
     {
@@ -195,7 +214,16 @@ public class UiNav : MonoBehaviour
         creditsMenu.SetActive(false);
         mainMenu.SetActive(false);
         loadMenu.SetActive(false);
-        PauseMenu.SetActive(false);
+        pauseMenu1.SetActive(false);
+        controlsMenu.SetActive(false);
+        Time.timeScale = 0f;
+    }
+    public IEnumerator ControlsCO()
+    {
+        Time.timeScale = 1f;
+        yield return new WaitForSeconds(buttonDelay);
+        settingsMenu.SetActive(false);
+        controlsMenu.SetActive(true);
         Time.timeScale = 0f;
     }
     public IEnumerator LoadMenuCO()

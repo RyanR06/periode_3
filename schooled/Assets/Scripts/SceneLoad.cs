@@ -137,7 +137,7 @@ public class SceneLoad : MonoBehaviour
     public IEnumerator ToMainMenuCO()
     {
         beginLoading = true;
-
+        loadingColor.a = 1;
         yield return new WaitForSeconds(loadingDelay);
         StartCoroutine(LoadSceneAsync());
 

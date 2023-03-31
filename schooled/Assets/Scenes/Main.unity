@@ -1939,6 +1939,7 @@ MonoBehaviour:
   playerLoc: {x: 0, y: 0, z: 0}
   slot: 1
   loadLock: {fileID: 1235912502}
+  sceneLoad: {fileID: 610318437}
   xMLData:
     slot: 0
     playerLoc: {x: 0, y: 0, z: 0}
@@ -2067,6 +2068,7 @@ MonoBehaviour:
   loadingColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 0}
   beginLoading: 0
   endLoading: 0
+  dontSetTime: 0
   loadingGameObjects: {fileID: 713935435}
   progressSlider: {fileID: 1673211677}
   loadingText: {fileID: 1539600578}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectPickup : MonoBehaviour
 {
- public RaycastHit hit;
+    public RaycastHit hit;
     public GameObject cameraa;
     public bool pickUp;
 
@@ -16,6 +16,7 @@ public class ObjectPickup : MonoBehaviour
             {
                 if(pickUp == true)
                 {
+                    
                     if (hit.transform.tag == "Deur")
                     {
                         pickUp = false;

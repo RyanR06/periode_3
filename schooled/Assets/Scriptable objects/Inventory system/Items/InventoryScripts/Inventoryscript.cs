@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
-
+[CreateAssetMenu(fileName = "New Inventory Script", menuName = "Inventory system/Inventory")]
 public class InventoryScript : ScriptableObject
 {
     public List<Inventoryslot> Container = new List<Inventoryslot>();

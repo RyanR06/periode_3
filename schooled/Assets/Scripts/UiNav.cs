@@ -243,6 +243,6 @@ public class UiNav : MonoBehaviour
         sceneLoad.levelLoad = "main";
         StartCoroutine(sceneLoad.ToMainMenuCO());
 
-
+        Debug.Log("Loadmain");
     }
 }
